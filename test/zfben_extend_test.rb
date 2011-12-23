@@ -25,6 +25,6 @@ class TestZfbenExtend < Test::Unit::TestCase
 
   def test_all
     assert_equal ZfbenExtend::String.to_html('text http://link #tag mail@mail.com @user text', link: false, tag: false, mail: false, user: false), 'text http://link #tag mail@mail.com @user text'
-    assert_equal ZfbenExtend::String.to_html('text http://link #tag mail@mail.com @user text'), 'text <a href="http://link">http://link</a> <a href="/tags/tag">#tag</a> <a href="mailto:mail@mail.com">mail@mail.com</a> <a href="/users/user">@user</a> text'
+    assert_equal ZfbenExtend::String.to_html('text http://link #tag mail@mail.com @user text', tag_url: '/tagurl/', user_url: '/userurl/'), 'text <a href="http://link">http://link</a> <a href="/tagurl/tag">#tag</a> <a href="mailto:mail@mail.com">mail@mail.com</a> <a href="/userurl/user">@user</a> text'
   end
 end
