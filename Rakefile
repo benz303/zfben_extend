@@ -6,3 +6,5 @@ task :test do
   require 'test/unit'
   Dir['test/*_test.rb'].each{ |f| require File.realpath(f) }
 end
+
+task :default => :test
