@@ -2,6 +2,8 @@
 
 A tool to extend ruby string.
 
+[![Build Status](https://secure.travis-ci.org/benz303/zfben_extend.png)](http://travis-ci.org/benz303/zfben_extend)
+
 ## Install
 
   gem 'zfben_extend'
