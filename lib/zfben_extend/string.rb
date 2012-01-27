@@ -1,4 +1,5 @@
-class ZfbenExtend::String
+# encoding: UTF-8
+class ZfbenExtend::String < String
   def self.to_html text, options={}
     options = {
       link: true,
@@ -53,6 +54,23 @@ class ZfbenExtend::String
       end
     end
     
-    text
+    self.new text
+  end
+  
+  def to_html options = {}
+    self.class.to_html self, options
+  end
+  
+  def self.to_cnbr text, options = {}
+    options = {
+      chars: /(。|！|？)/,
+      br: '<br />'
+    }.merge(options)
+
+    self.new text.gsub(options[:chars]){ |char| char << options[:br] }
+  end
+  
+  def to_cnbr options = {}
+    self.class.to_cnbr self, options
   end
 end
