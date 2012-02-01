@@ -5,7 +5,7 @@ class ZfbenExtend::String < String
       link: true,
       link_regexp: /[a-zA-Z]{3,}:\/\/\S+/,
       tag: true,
-      tag_regexp: /#[a-zA-Z0-9]+/,
+      tag_regexp: /&?#[a-zA-Z0-9]+/,
       tag_url: '/tags/',
       mail: true,
       mail_regexp: /[a-zA-Z0-9.-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9.]+/,
@@ -27,8 +27,12 @@ class ZfbenExtend::String < String
     if options[:tag]
       data[:tag] = []
       text = text.gsub(options[:tag_regexp]){ |tag|
-        data[:tag].push('<a href="' + options[:tag_url] + tag.gsub('#', '') + '">' + tag + '</a>')
-        'ZFBENTAG' + (data[:tag].length - 1).to_s + 'ZFBENTAG'
+        if tag[0] != '&'
+          data[:tag].push('<a href="' + options[:tag_url] + tag.gsub('#', '') + '">' + tag + '</a>')
+          'ZFBENTAG' + (data[:tag].length - 1).to_s + 'ZFBENTAG'
+        else
+          tag
+        end
       }
     end
     

@@ -28,10 +28,12 @@ class TestToHtml < Test::Unit::TestCase
     assert_equal ZfbenExtend::String.to_html('#a', tag: false), '#a'
     assert_equal ZfbenExtend::String.to_html('#a'), '<a href="/tags/a">#a</a>'
     assert_equal ZfbenExtend::String.to_html('text #a #b'), 'text <a href="/tags/a">#a</a> <a href="/tags/b">#b</a>'
+    assert_equal ZfbenExtend::String.to_html('&#39;s'), '&#39;s'
     
     assert_equal ZfbenExtend::String.new('#a').to_html(tag: false), '#a'
     assert_equal ZfbenExtend::String.new('#a').to_html, '<a href="/tags/a">#a</a>'
     assert_equal ZfbenExtend::String.new('text #a #b').to_html, 'text <a href="/tags/a">#a</a> <a href="/tags/b">#b</a>'
+    assert_equal ZfbenExtend::String.new('&#39;s').to_html, '&#39;s'
   end
   
   def test_mail
