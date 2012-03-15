@@ -1,4 +1,7 @@
 # encoding: UTF-8
+require 'redcarpet'
+require 'coderay'
+
 class ZfbenExtend::String < String
   def self.to_html text, options={}
     options = {
@@ -76,5 +79,29 @@ class ZfbenExtend::String < String
   
   def to_cnbr options = {}
     self.class.to_cnbr self, options
+  end
+  
+  def self.markdown text, options = {}
+    options = {
+      autolink: true, 
+      space_after_headers: true,
+      fenced_code_blocks: true,
+      no_intra_emphasis: true,
+      hard_wrap: true,
+      strikethrough: true
+    }.merge(options)
+    markdown = Redcarpet::Markdown.new(ZfbenExtend::HTMLwithCodeRay, options)
+    self.new markdown.render(text)
+  end
+  
+  def markdown options = {}
+    self.class.markdown self, options
+  end
+end
+
+class ZfbenExtend::HTMLwithCodeRay < Redcarpet::Render::HTML
+  def block_code code, lang
+    lang = lang.nil? ? :ruby : lang.to_sym
+    CodeRay.scan(code, lang).div
   end
 end

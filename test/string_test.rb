@@ -82,3 +82,19 @@ class TestToCnBr < Test::Unit::TestCase
     assert_equal ZfbenExtend::String.new('a.b').to_cnbr(chars: /\./, br: '<hr />'), 'a.<hr />b'
   end
 end
+
+class TestMarkdown < Test::Unit::TestCase
+  def test_base
+    assert_equal ZfbenExtend::String.markdown('a'), "<p>a</p>\n"
+    assert_equal ZfbenExtend::String.markdown("a\na"), "<p>a\na</p>\n"
+    assert_equal ZfbenExtend::String.markdown("a\n\na"), "<p>a</p>\n\n<p>a</p>\n"
+    assert_equal ZfbenExtend::String.markdown('    a'), "<div class=\"CodeRay\">\n  <div class=\"code\"><pre>a\n</pre></div>\n</div>\n"
+    assert_equal ZfbenExtend::String.markdown("```ruby\n    a\n```"), "<div class=\"CodeRay\">\n  <div class=\"code\"><pre>    a\n</pre></div>\n</div>\n"
+    
+    assert_equal ZfbenExtend::String.new('a').markdown, "<p>a</p>\n"
+    assert_equal ZfbenExtend::String.new("a\na").markdown, "<p>a\na</p>\n"
+    assert_equal ZfbenExtend::String.new("a\n\na").markdown, "<p>a</p>\n\n<p>a</p>\n"
+    assert_equal ZfbenExtend::String.new('    a').markdown, "<div class=\"CodeRay\">\n  <div class=\"code\"><pre>a\n</pre></div>\n</div>\n"
+    assert_equal ZfbenExtend::String.new("```ruby\n    a\n```").markdown, "<div class=\"CodeRay\">\n  <div class=\"code\"><pre>    a\n</pre></div>\n</div>\n"
+  end
+end
