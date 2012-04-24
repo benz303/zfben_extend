@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'redcarpet'
 require 'coderay'
+require 'active_support/core_ext/string'
 
 class ZfbenExtend::String < String
   def self.to_html text, options={}
@@ -61,7 +62,7 @@ class ZfbenExtend::String < String
       end
     end
     
-    self.new text
+    self.new text.html_safe
   end
   
   def to_html options = {}
@@ -74,7 +75,7 @@ class ZfbenExtend::String < String
       br: '<br />'
     }.merge(options)
 
-    self.new text.gsub(options[:chars]){ |char| char << options[:br] }
+    self.new text.gsub(options[:chars]){ |char| char << options[:br] }.html_safe
   end
   
   def to_cnbr options = {}
@@ -91,7 +92,7 @@ class ZfbenExtend::String < String
       strikethrough: true
     }.merge(options)
     markdown = Redcarpet::Markdown.new(ZfbenExtend::HTMLwithCodeRay, options)
-    self.new markdown.render(text)
+    self.new markdown.render(text).html_safe
   end
   
   def markdown options = {}
